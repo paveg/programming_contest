@@ -2,15 +2,17 @@
 #include <algorithm>
 #include <vector>
 
+using namespace std;
+
 int main() {
     int n;
     int stairs = 0;
     scanf("%d", &n);
 
-    std::vector<int> m(n);
+    vector<int> m(n);
 
     for (int i = 0; i < n; i++) {
-        std::cin >> m[i];
+        cin >> m[i];
     }
     sort(m.begin(), m.end());
     for (int j = 0; j < m.size(); j++) {
@@ -18,6 +20,6 @@ int main() {
             stairs++;
         }
     }
-    std::cout << stairs;
+    cout << stairs;
     return 0;
 }

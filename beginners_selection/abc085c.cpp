@@ -1,12 +1,14 @@
 #include <iostream>
 
+using namespace std;
+
 int Amount(int x, int y, int z) {
     return (10000 * x) + (5000 * y) + (1000 * z);
 }
 
 int main() {
     int n, yen;
-    std::cin >> n >> yen;
+    cin >> n >> yen;
 
     int x10 = -1, x5 = -1, x1 = -1;
     for (int i = 0; i <= n; i++) {
@@ -17,6 +19,6 @@ int main() {
         }
     }
 
-    std::cout << x10 << " " << x5 << " " << x1 << std::endl;
+    cout << x10 << " " << x5 << " " << x1 << endl;
     return 0;
 }
