@@ -1,78 +1,66 @@
 #include <iostream>
-#include <cstring>
-#include <algorithm>
 
 using namespace std;
+
+struct Card {
+    char suit, value;
+};
+
 static const int MAX = 36;
 
-void trace(string a[], int n) {
-    for (int i = 0; i < n; i++) {
-        if (i > 0) cout << " ";
-        cout << a[i];
-    }
-    cout << endl;
-}
-
-void bubbleSort(string r[], int n) {
+void bubbleSort(struct Card card[], int n) {
     for (int i = 0; i < n - 1; i++) {
         for (int j = n - 1; j >= i + 1; j--) {
-            if (r[j][1] < r[j - 1][1]) {
-                swap(r[j], r[j - 1]);
+            if (card[j].value < card[j - 1].value) {
+                swap(card[j], card[j - 1]);
             }
         }
     }
 }
 
-void selectionSort(string r[], int n) {
+void selectionSort(struct Card card[], int n) {
     for (int i = 0; i < n - 1; i++) {
         int minj = i;
         for (int j = i; j < n; j++) {
-            if (r[minj][1] > r[j][1]) minj = j;
+            if (card[minj].value > card[j].value) minj = j;
         }
-        swap(r[minj], r[i]);
+        swap(card[minj], card[i]);
     }
 }
 
-bool isStable(string in[], string out[], int n) {
-    for (int i = 0; i < n - 1; i++) {
-        for (int j = 1; j < n - 1; j++) {
-            for (int a = 0; a < n - 1; a++) {
-                for (int b = a + 1; b < n - 1; b++) {
-                    if (in[i][1] == in[j][1]) {
-                        if (in[i] == out[b] && in[j] == out[a]) return false;
-                    }
-                }
-            }
-        }
+bool isStable(struct Card c1[], Card c2[], int n) {
+    for (int i = 0; i < n; i++) {
+        if (c1[i].suit != c2[i].suit) return false;
     }
     return true;
 }
 
-// stable sort
+void output(struct Card c[], int n) {
+    for (int i = 0; i < n; i++) {
+        if (i > 0) cout << " ";
+        cout << c[i].suit << c[i].value;
+    }
+    cout << endl;
+}
+
 int main() {
+    Card c1[MAX], c2[MAX];
     int n;
     cin >> n;
-    string r[MAX], r1[MAX], r2[MAX];
-    for (int i = 0; i < n; i++) cin >> r[i];
 
-    memcpy(r1, r, sizeof(r));
-    memcpy(r2, r, sizeof(r));
+    for (int i = 0; i < n; i++) cin >> c1[i].suit >> c1[i].value;
+    for (int i = 0; i < n; i++) c2[i] = c1[i]; // copied
 
-    bubbleSort(r1, n); // stable
-    trace(r1, n);
-    if (isStable(r, r1, n)) {
+    bubbleSort(c1, n);
+    output(c1, n);
+    cout << "Stable" << endl;
+
+    selectionSort(c2, n);
+    output(c2, n);
+    if (isStable(c1, c2, n)) {
         cout << "Stable" << endl;
     } else {
         cout << "Not stable" << endl;
     }
-
-    selectionSort(r2, n); // not stable
-    trace(r2, n);
-    if (isStable(r, r2, n)) {
-        cout << "Stable" << endl;
-    } else {
-        cout << "Not stable" << endl;
-    }
-
     return 0;
 }
