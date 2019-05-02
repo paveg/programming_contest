@@ -6,23 +6,23 @@
 
 using namespace std;
 
+bool linerSearch(vector<int> vec, int key) {
+    auto itr = find(vec.begin(), vec.end(), key);
+    size_t index = std::distance(vec.begin(), itr);
+    return index != vec.size();
+}
+
 int main() {
-    int n, q;
+    int n, q, key;
     scanf("%d", &n);
     vector<int> S(n);
     rep(i, n) scanf("%d", &S[i]);
-    scanf("%d", &q);
-    vector<int> T(q);
-    rep(i, q) scanf("%d", &T[i]);
 
     int ans = 0;
-    for (int i = 0; i < T.size(); ++i) {
-        for (int j = 0; j < S.size(); ++j) {
-            if (S[j] == T[i]) {
-                ++ans;
-                break;
-            }
-        }
+    scanf("%d", &q);
+    for (int i = 0; i < q; ++i) {
+        scanf("%d", &key);
+        if (linerSearch(S, key)) ++ans;
     }
 
     printf("%d\n", ans);
