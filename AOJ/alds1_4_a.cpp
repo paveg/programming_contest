@@ -1,5 +1,4 @@
 #include <cstdio>
-#include <algorithm>
 #include <vector>
 
 #define rep(i, N) for (int i = 0; i < N; ++i)
@@ -7,9 +6,8 @@
 using namespace std;
 
 bool linerSearch(vector<int> vec, int key) {
-    auto itr = find(vec.begin(), vec.end(), key);
-    size_t index = std::distance(vec.begin(), itr);
-    return index != vec.size();
+    rep(i, vec.size()) if (vec[i] == key) return true;
+    return false;
 }
 
 int main() {
