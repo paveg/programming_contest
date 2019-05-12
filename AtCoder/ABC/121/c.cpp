@@ -18,7 +18,7 @@ struct shop {
 };
 
 int main() {
-    ll N, M, ans = 0, bought = 0;
+    ll N, M, ans = 0;
     cin >> N >> M;
     vector<shop> S(N);
     ll A, B;
@@ -29,14 +29,14 @@ int main() {
     }
     sort(S.begin(), S.end());
 
-    while (bought != M) {
-        ans += S[0].price;
-        S[0].stock--;
-        bought++;
-        if (bought == M) break;
-        if (S[0].stock == 0) S.erase(S.begin());
+    rep(i, S.size()) {
+        if (M > S[i].stock) {
+            M -= S[i].stock;
+            ans += S[i].price * S[i].stock;
+        } else {
+            ans += M * S[i].price;
+            cout << ans << "\n";
+            return 0;
+        }
     }
-
-    cout << ans << "\n";
-    return 0;
 }
