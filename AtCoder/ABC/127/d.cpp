@@ -11,7 +11,6 @@ typedef long long int ll;
 int main() {
     ll N, M, A, B, C, ans = 0;
     cin >> N >> M;
-    vector<ll> card(N);
     priority_queue<pair<ll, ll>> que;
     rep(i, N) {
         cin >> A;
