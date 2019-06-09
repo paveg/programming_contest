@@ -1,18 +1,32 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <cmath>
-
-using namespace std;
 
 #define rep(i, N) for (int i = 0; i < N; ++i)
 
-int main() {
-    int N, M;
+using namespace std;
 
-    vector<int> order = {0, 1};
-    // step 1 or 2;
-    rep(i, N) {
+int main() {
+    int n, m;
+    cin >> n >> m;
+    vector<bool> broken(n + 1);
+
+    rep(i, m) {
+        int a;
+        cin >> a;
+        broken[a] = true;
     }
+
+    vector<int> dp(n + 2);
+    const int mod = 1000000007;
+    dp[n] = 1;
+    for (int i = n - 1; i >= 0; i--) {
+        if (broken[i]) {
+            dp[i] = 0;
+            continue;
+        }
+        dp[i] = (dp[i + 1] +  dp[i + 2]) % mod;
+    }
+
+    cout << dp[0] << endl;
     return 0;
 }
