@@ -1,49 +1,49 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <cmath>
-#include <cstring>
 
+#define rep(i, n) for (int i = 0; i < n; ++i)
 using namespace std;
 
-#define rep(i, N) for (int i = 0; i < N; ++i)
-
 int main() {
-    int H, W;
-    cin >> H >> W;
-    vector<string> S(H);
-    rep(i, H) {
-        cin >> S[i];
-    }
-
-    int maxSideCount = 0;
-    rep(i, S.size()) {
-        int sideCnt = 0;
-        rep(j, W) {
-            if (S[i][j] == '#') {
-                if (sideCnt > (S[i].size() - (j + 1))) break;
+    int h, w;
+    cin >> h >> w;
+    vector<string> s(h);
+    rep(i, h) cin >> s[i];
+    vector<vector<int>> cnt(h, vector<int>(w));
+    rep(i, h) {
+        vector<int> done(w);
+        rep(j, w) {
+            if (s[i][j] == '#') continue;
+            if (done[j]) continue;
+            int l = 0;
+            while (j + l < w) {
+                if (s[i][j + l] == '#') break;
+                ++l;
             }
-            if (S[i][j] == '.') {
-                sideCnt++;
-            }
-        }
-        maxSideCount = max(maxSideCount, sideCnt);
-    }
-
-    int maxVerticalCount = 0;
-    rep(i, W) {
-        int verticalCnt = 0;
-        rep(j, H) {
-            if (S[j][i] == '#') {
-                if (verticalCnt > (W - (j + 1))) break;
-            }
-            if (S[j][i] == '.') {
-                verticalCnt++;
+            rep(k, l) {
+                cnt[i][j + k] += l;
+                done[j + k] = 1;
             }
         }
-        maxVerticalCount = max(maxVerticalCount, verticalCnt);
     }
-
-    cout << (maxSideCount + maxVerticalCount - 1) << endl;
+    rep(j, w) {
+        vector<int> done(h);
+        rep(i, h) {
+            if (s[i][j] == '#') continue;
+            if (done[i]) continue;
+            int l = 0;
+            while (i + l < h) {
+                if (s[i + l][j] == '#') break;
+                ++l;
+            }
+            rep(k, l) {
+                cnt[i + k][j] += l;
+                done[i + k] = 1;
+            }
+        }
+    }
+    int ans = 0;
+    rep(i, h) rep(j, w) ans = max(ans, cnt[i][j] - 1);
+    cout << ans << endl;
     return 0;
 }
