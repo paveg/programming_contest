@@ -4,28 +4,28 @@
 #include <thread>
 
 using namespace std;
-using ll = long long;
+typedef long long ll;
 const ll inf = (1 << 30) - 1;
 const ll infll = (1LL << 61) - 1;
 const ll mod = 1e9 + 7;
 
-ll ans = 0;
+ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
+ll lcm(ll a, ll b) { return a / gcd(b, a % b) * b; }
+
+ll f(ll x, ll c, ll d) {
+    ll res = x;
+    res -= x / c;
+    res -= x / d;
+    res += x / lcm(c, d);
+    return res;
+}
 
 int main() {
     ll a, b, c, d;
     cin >> a >> b >> c >> d;
-    vector<thread> threads;
-    for (ll i = a; i < b; ++i) {
-        threads.emplace_back([i, c, d]() {
-            cout << i << endl;
-            if (i % c != 0 && i % d != 0) ans++;
-        });
-    }
+    ll ans = 0;
 
-    for(auto &t: threads){
-        t.join();
-    }
-
+    ans = f(b, c, d) - f(a - 1, c, d);
     cout << ans << endl;
     return 0;
 }
