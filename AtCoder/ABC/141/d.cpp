@@ -12,27 +12,27 @@ ll gcd(ll a, ll b) { return b ? gcd(b, a % b) : a; }
 
 ll lcm(ll a, ll b) { return a / gcd(b, a % b) * b; }
 
-
-float discount(ll x) {
-    return (float) x / (float) pow(2, 1);
-}
-
 void actual() {
     // Resolve the problem.
     ll n, m, a, res = 0;
     cin >> n >> m;
 
-    vector<float> S(n);
+    priority_queue<ll> que;
     rep(i, n) {
         cin >> a;
-        S[i] = (float) a;
+        que.push(a);
     }
 
+    ll q;
     rep(_, m) {
-        sort(S.begin(), S.end(), greater<float>());
-        S[0] = discount(S[0]);
+        q = que.top();
+        que.pop();
+        que.push(q / 2);
     }
-    for (const auto &e: S) res += floor(e);
+    while (!que.empty()) {
+        res += que.top();
+        que.pop();
+    }
     cout << res << endl;
 }
 
